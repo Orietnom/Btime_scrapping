@@ -1,0 +1,27 @@
+# ---- Segredos ----
+.env
+*.env
+.env.*
+
+# ---- Builds / Saídas ----
+output/
+output/**
+
+# ---- Python padrão ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# ---- Ambientes ----
+.venv/
+venv/
+env/
+
+# ---- IDEs / SO ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
