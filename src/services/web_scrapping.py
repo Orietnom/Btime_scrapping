@@ -37,21 +37,24 @@ class Scrapping:
 
     def navigate_to_url(self):
         """Navigate to the target URL and wait for the page to load."""
-
+        logger.info(f"Navigating to {self.url}")
         self.page.goto(self.url)
         self.page.wait_for_load_state('load')
+        logger.info("Page loaded")
 
     def filter_and_generate_table(self):
         """Select filters on the page and generate the results table."""
 
+        logger.info("Filtering weather data")
         # Placeholder variables for the elements we need to interact with
         menu = None
         option = None
         generate_table_btn = None
 
+        logger.info("Searching for the product dropdown.")
         comboboxs = self.page.get_by_role("combobox")
         if not comboboxs:
-            logger.error("The product dropdown menu was not found")
+            logger.error("The product dropdown menu not found")
             raise Exception
 
         for i in range(comboboxs.count()):
@@ -63,7 +66,9 @@ class Scrapping:
             logger.error("The product dropdown menu was not found")
         # Open the product dropdown
         menu.click()
+        logger.info("Product dropdown found and clicked")
 
+        logger.info(f"Searching for product option {self.product}")
         # Choose the desired product option
         product_option = self.page.get_by_text(self.product)
         for i in range(product_option.count()):
@@ -72,17 +77,22 @@ class Scrapping:
                 break
 
         if not menu:
-            logger.error("The product dropdown menu was not found")
+            logger.error("The product dropdown menu not found")
             raise Exception
         option.click()
+        logger.info("Product option found and selected")
 
+        logger.info("Searching for date field")
         # Locate the date input field and type the filter date
         date_field = self.page.locator("input[type='date']")
         if not date_field.count() or date_field.count() > 1:
-            logger.error("The date field was not found")
+            logger.error("Date field not found")
             raise Exception
 
         date_field.nth(0).type(date_to_filter(self.days_before))
+        logger.info(f"Date field found and set to {self.days_before}")
+
+        logger.info("Looking for generate table button")
         generate_table_element = self.page.get_by_role("button")
 
         # Find the button responsible for generating the table
@@ -96,7 +106,7 @@ class Scrapping:
             raise Exception
 
         generate_table_btn.click()
-        print("OK")
+        logger.info("Generate table button found and clicked")
 
     def get_table(self) -> List[Dict]:
         """Collect the generated table and return its data as dictionaries.
@@ -105,24 +115,31 @@ class Scrapping:
                 List[Dict]: Rows of the table
         """
 
+        logger.info("Getting the data about weather")
         # Locate the table and ensure at least one row is present
         table = self.page.locator("table")
         expect(table.locator("tbody tr").first).to_have_count(1, timeout=15000)
         if not table:
             logger.error("The table was not generated")
 
+        logger.info("Getting the table headers")
         # Extract table headers
         headers = [h.inner_text().strip() for h in table.locator("thead tr th").all()]
+        logger.info("Headers was extracted")
 
+        logger.info("Getting the table rows")
         rows = []
         for tr in table.locator("tbody tr").all():
             cells = [td.inner_text().strip() for td in tr.locator("td").all()]
             row = {headers[i]: cells[i] for i in range(min(len(headers), len(cells)))}
             rows.append(row)
+
+        logger.info("The data was extracted with success")
         return rows
 
     def run(self) -> List[Dict]:
         """Execute the scraping workflow and return collected rows."""
+        logger.info("Start the Automation")
         self.navigate_to_url()
         self.filter_and_generate_table()
         rows = self.get_table()

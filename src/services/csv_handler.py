@@ -6,6 +6,8 @@ from datetime import datetime
 
 import csv
 
+from src.shared.logger import logger
+
 # Project base directory used to resolve the output folder
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 OUTPUT_DIR = BASE_DIR / "output"
@@ -18,6 +20,7 @@ def csv_creator(rows: List[Dict]):
         rows: List of dictionaries representing table rows.
     """
 
+    logger.info("Creating the CSV")
     # Use the first row to determine the CSV header fields
     fields = rows[0].keys()
     today = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -30,3 +33,4 @@ def csv_creator(rows: List[Dict]):
         w.writeheader()
         # Write all rows into the CSV file
         w.writerows(rows)
+    logger.success("CSV was created with success")
