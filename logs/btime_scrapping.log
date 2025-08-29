@@ -1,0 +1,57 @@
+2025-08-29 00:17:10 | INFO | src.services.web_scrapping:run | Start the Automation | {}
+2025-08-29 00:17:10 | INFO | src.services.web_scrapping:navigate_to_url | Navigating to https://tempo.inmet.gov.br/ | {}
+2025-08-29 00:17:11 | INFO | src.services.web_scrapping:navigate_to_url | Page loaded | {}
+2025-08-29 00:17:11 | INFO | src.services.web_scrapping:filter_and_generate_table | Filtering weather data | {}
+2025-08-29 00:17:11 | INFO | src.services.web_scrapping:filter_and_generate_table | Searching for the product dropdown. | {}
+2025-08-29 00:17:11 | INFO | src.services.web_scrapping:filter_and_generate_table | Product dropdown found and clicked | {}
+2025-08-29 00:17:11 | INFO | src.services.web_scrapping:filter_and_generate_table | Searching for product option Condições de Tempo Registradas nas Capitais | {}
+2025-08-29 00:17:11 | INFO | src.services.web_scrapping:filter_and_generate_table | Product option found and selected | {}
+2025-08-29 00:17:11 | INFO | src.services.web_scrapping:filter_and_generate_table | Searching for date field | {}
+2025-08-29 00:17:11 | ERROR | __main__:<module> | Failed runing btime_scrapping | {}
+Traceback (most recent call last):
+
+> File "L:\ergon\Projetos pessoais\Btime_scrapping\main.py", line 14, in <module>
+    rows = Scrapping().run()
+           └ <class 'src.services.web_scrapping.Scrapping'>
+
+  File "L:\ergon\Projetos pessoais\Btime_scrapping\src\services\web_scrapping.py", line 144, in run
+    self.filter_and_generate_table()
+    │    └ <function Scrapping.filter_and_generate_table at 0x000001A93682ACB0>
+    └ <src.services.web_scrapping.Scrapping object at 0x000001A933E17EE0>
+
+  File "L:\ergon\Projetos pessoais\Btime_scrapping\src\services\web_scrapping.py", line 92, in filter_and_generate_table
+    date_field.nth(0).type(date_to_filter(self.days_before))
+    │          │           │              │    └ '1'
+    │          │           │              └ <src.services.web_scrapping.Scrapping object at 0x000001A933E17EE0>
+    │          │           └ <function date_to_filter at 0x000001A936829360>
+    │          └ <function Locator.nth at 0x000001A93662F880>
+    └ <Locator frame=<Frame name= url='https://tempo.inmet.gov.br/'> selector="input[type='date']">
+
+  File "L:\ergon\Projetos pessoais\Btime_scrapping\src\shared\date_to_filter.py", line 10, in date_to_filter
+    formatted_date = datetime.now() - timedelta(days=days_before)
+                     │        │       │              └ '1'
+                     │        │       └ <class 'datetime.timedelta'>
+                     │        └ <method 'now' of 'datetime.datetime' objects>
+                     └ <class 'datetime.datetime'>
+
+TypeError: unsupported type for timedelta days component: str
+2025-08-29 00:17:40 | INFO | src.services.web_scrapping:run | Start the Automation | {}
+2025-08-29 00:17:40 | INFO | src.services.web_scrapping:navigate_to_url | Navigating to https://tempo.inmet.gov.br/ | {}
+2025-08-29 00:17:41 | INFO | src.services.web_scrapping:navigate_to_url | Page loaded | {}
+2025-08-29 00:17:41 | INFO | src.services.web_scrapping:filter_and_generate_table | Filtering weather data | {}
+2025-08-29 00:17:41 | INFO | src.services.web_scrapping:filter_and_generate_table | Searching for the product dropdown. | {}
+2025-08-29 00:17:41 | INFO | src.services.web_scrapping:filter_and_generate_table | Product dropdown found and clicked | {}
+2025-08-29 00:17:41 | INFO | src.services.web_scrapping:filter_and_generate_table | Searching for product option Condições de Tempo Registradas nas Capitais | {}
+2025-08-29 00:17:42 | INFO | src.services.web_scrapping:filter_and_generate_table | Product option found and selected | {}
+2025-08-29 00:17:42 | INFO | src.services.web_scrapping:filter_and_generate_table | Searching for date field | {}
+2025-08-29 00:17:42 | INFO | src.services.web_scrapping:filter_and_generate_table | Date field found and set to 1 | {}
+2025-08-29 00:17:42 | INFO | src.services.web_scrapping:filter_and_generate_table | Looking for generate table button | {}
+2025-08-29 00:17:42 | INFO | src.services.web_scrapping:filter_and_generate_table | Generate table button found and clicked | {}
+2025-08-29 00:17:42 | INFO | src.services.web_scrapping:get_table | Getting the data about weather | {}
+2025-08-29 00:17:42 | INFO | src.services.web_scrapping:get_table | Getting the table headers | {}
+2025-08-29 00:17:42 | INFO | src.services.web_scrapping:get_table | Headers was extracted | {}
+2025-08-29 00:17:42 | INFO | src.services.web_scrapping:get_table | Getting the table rows | {}
+2025-08-29 00:17:42 | INFO | src.services.web_scrapping:get_table | The data was extracted with success | {}
+2025-08-29 00:17:42 | INFO | src.services.csv_handler:csv_creator | Creating the CSV | {}
+2025-08-29 00:17:42 | SUCCESS | src.services.csv_handler:csv_creator | CSV was created with success | {}
+2025-08-29 00:17:42 | SUCCESS | __main__:<module> | Automation Finished | {}

@@ -89,7 +89,7 @@ class Scrapping:
             logger.error("Date field not found")
             raise Exception
 
-        date_field.nth(0).type(date_to_filter(self.days_before))
+        date_field.nth(0).type(date_to_filter(int(self.days_before)))
         logger.info(f"Date field found and set to {self.days_before}")
 
         logger.info("Looking for generate table button")
