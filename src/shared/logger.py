@@ -1,3 +1,5 @@
+"""Logging configuration shared across the project."""
+
 import os
 from loguru import logger
 from datetime import datetime
@@ -8,16 +10,18 @@ from pathlib import Path
 
 load_dotenv()
 
-
+# Determine paths for storing log files
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-LOG_DIR = (BASE_DIR / 'logs').resolve()
+LOG_DIR = (BASE_DIR / "logs").resolve()
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 today = datetime.now(pytz.timezone("America/Sao_Paulo")).strftime("Log_%Y%m%d.log")
-log_path = os.path.join(LOG_DIR, 'win_catalog.log')
+log_path = os.path.join(LOG_DIR, "btime_scrapping.log")
 
+# Remove default handlers to customize output
 logger.remove()
 
+# File handler that rotates daily and compresses old logs
 logger.add(
     log_path,
     rotation="00:00",
@@ -28,6 +32,7 @@ logger.add(
     enqueue=True,
 )
 
+# Console handler for real-time feedback
 logger.add(
     sink=sys.stdout,
     format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}:{function}</cyan> | <level>{message}</level>",
